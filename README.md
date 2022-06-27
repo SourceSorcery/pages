@@ -1,2 +1,2 @@
-# sorcesorcery.github.io
+# pages
 SorceSorcery's GitHub Page
