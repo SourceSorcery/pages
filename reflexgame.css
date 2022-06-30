@@ -1,0 +1,17 @@
+#gamebutton{
+    height: 300px;
+    width: 300px;
+    background-color: blue;
+    margin:auto;
+}
+#gamewrapper{
+    width: 330px;
+    margin:auto;
+}
+#gametext{
+    font-style: italic;
+    font-weight: 700;
+    width: 150px;
+    margin:auto;
+    justify-content: center;
+}

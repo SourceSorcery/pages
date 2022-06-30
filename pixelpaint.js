@@ -1,5 +1,6 @@
 $(document).ready(function(){
     console.log('pixel paint ready');
+
     createCanvas();
     function createCanvas(){
         var h = "<div class='pixel'></div>";
@@ -33,5 +34,20 @@ $(document).ready(function(){
     }
     $('.pixel').click(togglepainting);
 
+    function clearCanvas(){
+        if (confirm('Clear Canvas?  This will reset all pixels.')) {
+            var newCSS = {"background-color": "white", "border-color": "lightgray" };
+            $('.pixel').css(newCSS);
+        }
+    }
+    $('#clearCanvas').click(clearCanvas);
+
+    function paintCanvas(){
+        if (confirm('Paint Canvas?  This will set all pixels to the selected color.')) {
+            var newCSS = {"background-color": selectedColor, "border-color": selectedColor };
+            $('.pixel').css(newCSS);
+        }
+    }
+    $('#paintCanvas').click(paintCanvas);
 
 });
