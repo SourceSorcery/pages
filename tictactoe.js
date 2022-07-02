@@ -27,7 +27,18 @@ $(document).ready(function(){
         }
     }
     function player2(){
+        var stop = 0;
         var foundMove = false;
+        sumState = 0;
+        for(var i in state){sumState += state[i];}
+        console.log(sumState);
+        //take a corner square if player starts in center
+        if(sumState == 1 && state[4] == 1){
+            var corners = [0,2,6,8];
+            var cornermove = corners[Math.floor(Math.random()*4)];
+            move2(cornermove);
+            foundMove = true;
+        }
         //take middle cell
         if(foundMove == false && isCellEmpty(4)){
             move2(4);
@@ -124,7 +135,23 @@ $(document).ready(function(){
             move2(0);
             foundMove = true;
         }
-        var stop = 0;
+        //take a corner square if player starts in center and then takes a corner square
+        if(sumState == 4 && state[4] == 1 && (state[0] == 1 || state[2] == 1 || state[6] == 1 || state[8] == 1)){
+            var corners = [0,2,6,8];
+            while(!foundMove){
+                var cornermove = corners[Math.floor(Math.random()*4)];
+                if (isCellEmpty(cornermove)){
+                    move2(cornermove);
+                    foundMove = true;
+                }
+                stop++;
+                if(stop>333){
+                    foundMove = true;
+                    $('#gametext').html("There was an error");
+                }
+            }
+            foundMove = true;
+        }
         while(!foundMove){
             var tryid = Math.round(Math.random()*8);
             console.log(tryid);
@@ -132,7 +159,6 @@ $(document).ready(function(){
                 move2(tryid);
                 foundMove = true;
             }
-
             stop++;
             if(stop>333){
                 foundMove = true;
