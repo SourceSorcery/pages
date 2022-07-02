@@ -35,6 +35,9 @@
 
 
 @media (max-width:600px){
+    #contentMain{
+        margin:0px;
+    }
     .move-cell{
         width:30vw;
         padding: 5px;
@@ -42,11 +45,9 @@
 }
 
 @media (min-width:601px) and (max-width:992px){
+
     .move-cell{
-        max-height:110px;
-        min-width: 25vw;
-        max-width:110px;
-        min-height: 95px;
+        width:30vw;
         padding: 5px;
     }
 }
