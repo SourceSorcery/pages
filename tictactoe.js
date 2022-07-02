@@ -1,7 +1,7 @@
 $(document).ready(function(){
     console.log('ttt ready');
     const imgX = "<img class='x move-img' width='100px' src='assets/x.png'>";
-    const imgO = "<img class='o move-img' width='100px' src='assets/O.png'>";
+    const imgO = "<img class='o move-img' width='100px' src='assets/o.png'>";
     const nyan = "<img width='100px' src='assets/nyan100.gif'>";
     const computerwins = "<img width='100px' src='assets/computerwins.gif'>";
     const playerwins = "<img width='100px' src='assets/playerwins.gif'>";
