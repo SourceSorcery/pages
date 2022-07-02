@@ -29,98 +29,98 @@ $(document).ready(function(){
     function player2(){
         var foundMove = false;
         //take middle cell
-        if(isCellEmpty(4)){
+        if(foundMove == false && isCellEmpty(4)){
             move2(4);
             foundMove = true;
         }
         //top row check        
-        if(state[0] == state[1] && state[0] == 1 && isCellEmpty(2)){
+        if(foundMove == false && state[0] == state[1] && state[0] == 1 && isCellEmpty(2)){
             move2(2);
             foundMove = true;
         }
-        if(state[1] == state[2] && state[1] == 1 && isCellEmpty(0)){
+        if(foundMove == false && state[1] == state[2] && state[1] == 1 && isCellEmpty(0)){
             move2(0);
             foundMove = true;
         }
-        if(state[0] == state[2] && state[0] == 1 && isCellEmpty(1)){
+        if(foundMove == false && state[0] == state[2] && state[0] == 1 && isCellEmpty(1)){
             move2(1);
             foundMove = true;
         }
         //middle row check        
-        if(state[3] == state[4] && state[3] == 1 && isCellEmpty(5)){
+        if(foundMove == false && state[3] == state[4] && state[3] == 1 && isCellEmpty(5)){
             move2(5);
             foundMove = true;
         }
-        if(state[4] == state[5] && state[4] == 1 && isCellEmpty(3)){
+        if(foundMove == false && state[4] == state[5] && state[4] == 1 && isCellEmpty(3)){
             move2(3);
             foundMove = true;
         }
-        if(state[3] == state[5] && state[3] == 1 && isCellEmpty(4)){
+        if(foundMove == false && state[3] == state[5] && state[3] == 1 && isCellEmpty(4)){
             move2(4);
             foundMove = true;
         }
         //bottom row check        
-        if(state[6] == state[7] && state[6] == 1 && isCellEmpty(8)){
+        if(foundMove == false && state[6] == state[7] && state[6] == 1 && isCellEmpty(8)){
             move2(8);
             foundMove = true;
         }
-        if(state[7] == state[8] && state[7] == 1 && isCellEmpty(6)){
+        if(foundMove == false && state[7] == state[8] && state[7] == 1 && isCellEmpty(6)){
             move2(6);
             foundMove = true;
         }
-        if(state[6] == state[8] && state[6] == 1 && isCellEmpty(7)){
+        if(foundMove == false && state[6] == state[8] && state[6] == 1 && isCellEmpty(7)){
             move2(7);
             foundMove = true;
         }
         //left column check        
-        if(state[0] == state[3] && state[0] == 1 && isCellEmpty(6)){
+        if(foundMove == false && state[0] == state[3] && state[0] == 1 && isCellEmpty(6)){
             move2(6);
             foundMove = true;
         }
-        if(state[0] == state[6] && state[0] == 1 && isCellEmpty(3)){
+        if(foundMove == false && state[0] == state[6] && state[0] == 1 && isCellEmpty(3)){
             move2(3);
             foundMove = true;
         }
-        if(state[3] == state[6] && state[3] == 1 && isCellEmpty(0)){
+        if(foundMove == false && state[3] == state[6] && state[3] == 1 && isCellEmpty(0)){
             move2(0);
             foundMove = true;
         }
         //center column check        
-        if(state[1] == state[4] && state[1] == 1 && isCellEmpty(7)){
+        if(foundMove == false && state[1] == state[4] && state[1] == 1 && isCellEmpty(7)){
             move2(7);
             foundMove = true;
         }
-        if(state[1] == state[7] && state[1] == 1 && isCellEmpty(4)){
+        if(foundMove == false && state[1] == state[7] && state[1] == 1 && isCellEmpty(4)){
             move2(4);
             foundMove = true;
         }
-        if(state[4] == state[7] && state[4] == 1 && isCellEmpty(1)){
+        if(foundMove == false && state[4] == state[7] && state[4] == 1 && isCellEmpty(1)){
             move2(1);
             foundMove = true;
         }
         //right column check        
-        if(state[2] == state[5] && state[2] == 1 && isCellEmpty(8)){
+        if(foundMove == false && state[2] == state[5] && state[2] == 1 && isCellEmpty(8)){
             move2(8);
             foundMove = true;
         }
-        if(state[2] == state[8] && state[2] == 1 && isCellEmpty(5)){
+        if(foundMove == false && state[2] == state[8] && state[2] == 1 && isCellEmpty(5)){
             move2(5);
             foundMove = true;
         }
-        if(state[5] == state[8] && state[5] == 1 && isCellEmpty(2)){
+        if(foundMove == false && state[5] == state[8] && state[5] == 1 && isCellEmpty(2)){
             move2(2);
             foundMove = true;
         }
         //top-left to bottom-right check        
-        if(state[0] == state[4] && state[0] == 1 && isCellEmpty(8)){
+        if(foundMove == false && state[0] == state[4] && state[0] == 1 && isCellEmpty(8)){
             move2(8);
             foundMove = true;
         }
-        if(state[0] == state[8] && state[0] == 1 && isCellEmpty(4)){
+        if(foundMove == false && state[0] == state[8] && state[0] == 1 && isCellEmpty(4)){
             move2(4);
             foundMove = true;
         }
-        if(state[8] == state[4] && state[8] == 1 && isCellEmpty(0)){
+        if(foundMove == false && state[8] == state[4] && state[8] == 1 && isCellEmpty(0)){
             move2(0);
             foundMove = true;
         }

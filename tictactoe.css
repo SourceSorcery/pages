@@ -15,6 +15,9 @@
     width:110px;
     padding: 3px;
 }
+.move-img{
+    margin: auto;
+}
 
 .row-top{
     border-bottom: 2px solid darkgray;
