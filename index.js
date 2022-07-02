@@ -2,8 +2,8 @@ $(document).ready(readyFunction);
 
 function readyFunction( jQuery ){
   console.log('document ready');
-  $('#p1').html('I was modified by jquery!');
   fadeInWord("Mark Fergason's GitHub Pages","#h1title");
+  $('#linkMenu').click(function(){$('#mySidebar').show();})
 }
 
 function fadeInWord(word, wrapperElementSelector){

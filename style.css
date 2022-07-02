@@ -2,9 +2,18 @@
     font-family: 'Pacifico', cursive;
 }
 #h1title{
+    float:left;
     font-size: 44px;
+    width:88%;
 }
-
+#headerbar{
+    float: clear;
+}
+#linkMenu{
+    width:8%;
+    float: right;
+    vertical-align: top;
+}
 @media (max-width:600px){
     #h1title{
         font-size: 22px;

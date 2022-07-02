@@ -16,7 +16,6 @@ $(document).ready(function(){
         if(isCellEmpty(id)){
             $(this).html(imgX);
             state[id] = 1;
-            console.log(state);
             checkWin();
             checkTie();
             if (status == "playing"){
@@ -31,7 +30,6 @@ $(document).ready(function(){
         var foundMove = false;
         sumState = 0;
         for(var i in state){sumState += state[i];}
-        console.log(sumState);
         //take a corner square if player starts in center
         if(sumState == 1 && state[4] == 1){
             var corners = [0,2,6,8];
@@ -154,7 +152,6 @@ $(document).ready(function(){
         }
         while(!foundMove){
             var tryid = Math.round(Math.random()*8);
-            console.log(tryid);
             if (isCellEmpty(tryid)){
                 move2(tryid);
                 foundMove = true;
