@@ -3,7 +3,7 @@
 }
 #h1title{
     float:left;
-    font-size: 44px;
+    font-size: 40px;
     width:88%;
 }
 #headerbar{
@@ -13,8 +13,13 @@
     width:8%;
     float: right;
     vertical-align: top;
+    align-items: right;
+}@media (max-width:400px){
+    #h1title{
+        font-size: 18px;
+    }
 }
-@media (max-width:600px){
+@media (min-width:401px) and (max-width:600px){
     #h1title{
         font-size: 22px;
     }

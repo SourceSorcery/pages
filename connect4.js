@@ -1,10 +1,10 @@
 $(document).ready(function(){
     console.log('ttt ready');
-    const imgX = "<img class='x move-img' width='80vw' src='assets/x.png'>";
-    const imgO = "<img class='o move-img' width='80vw' src='assets/o.png'>";
-    const nyan = "<img width='80vw' src='assets/nyan100.gif'>";
-    const computerwins = "<img  width='80vw' src='assets/computerwins.gif'>";
-    const playerwins = "<img  width='80vw' src='assets/playerwins.gif'>";
+    const imgX = "<img class='x move-img' width='100px' src='assets/x.png'>";
+    const imgO = "<img class='o move-img' width='100px' src='assets/o.png'>";
+    const nyan = "<img width='100px' src='assets/nyan100.gif'>";
+    const computerwins = "<img width='100px' src='assets/computerwins.gif'>";
+    const playerwins = "<img width='100px' src='assets/playerwins.gif'>";
     var status = "waiting";
     var state = [0,0,0,0,0,0,0,0,0];
 
