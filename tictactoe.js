@@ -1,0 +1,211 @@
+$(document).ready(function(){
+    console.log('ttt ready');
+    const imgX = "<img class='x move-img' width='100px' src='assets/x.png'>";
+    const imgO = "<img class='o move-img' width='100px' src='assets/O.png'>";
+    const nyan = "<img width='100px' src='assets/nyan100.gif'>";
+    const computerwins = "<img width='100px' src='assets/computerwins.gif'>";
+    const playerwins = "<img width='100px' src='assets/playerwins.gif'>";
+    var status = "waiting";
+    var state = [0,0,0,0,0,0,0,0,0];
+
+    $('.move-cell').click(player1)
+
+    function player1(){
+        status = "playing";
+        var id = $(this).attr('id');
+        if(isCellEmpty(id)){
+            $(this).html(imgX);
+            state[id] = 1;
+            console.log(state);
+            checkWin();
+            checkTie();
+            if (status == "playing"){
+                player2();
+            }
+        }else{
+            $('#gametext').html("Pick an empty cell");
+        }
+    }
+    function player2(){
+        var foundMove = false;
+        //take middle cell
+        if(isCellEmpty(4)){
+            move2(4);
+            foundMove = true;
+        }
+        //top row check        
+        if(state[0] == state[1] && state[0] == 1 && isCellEmpty(2)){
+            move2(2);
+            foundMove = true;
+        }
+        if(state[1] == state[2] && state[1] == 1 && isCellEmpty(0)){
+            move2(0);
+            foundMove = true;
+        }
+        if(state[0] == state[2] && state[0] == 1 && isCellEmpty(1)){
+            move2(1);
+            foundMove = true;
+        }
+        //middle row check        
+        if(state[3] == state[4] && state[3] == 1 && isCellEmpty(5)){
+            move2(5);
+            foundMove = true;
+        }
+        if(state[4] == state[5] && state[4] == 1 && isCellEmpty(3)){
+            move2(3);
+            foundMove = true;
+        }
+        if(state[3] == state[5] && state[3] == 1 && isCellEmpty(4)){
+            move2(4);
+            foundMove = true;
+        }
+        //bottom row check        
+        if(state[6] == state[7] && state[6] == 1 && isCellEmpty(8)){
+            move2(8);
+            foundMove = true;
+        }
+        if(state[7] == state[8] && state[7] == 1 && isCellEmpty(6)){
+            move2(6);
+            foundMove = true;
+        }
+        if(state[6] == state[8] && state[6] == 1 && isCellEmpty(7)){
+            move2(7);
+            foundMove = true;
+        }
+        //left column check        
+        if(state[0] == state[3] && state[0] == 1 && isCellEmpty(6)){
+            move2(6);
+            foundMove = true;
+        }
+        if(state[0] == state[6] && state[0] == 1 && isCellEmpty(3)){
+            move2(3);
+            foundMove = true;
+        }
+        if(state[3] == state[6] && state[3] == 1 && isCellEmpty(0)){
+            move2(0);
+            foundMove = true;
+        }
+        //center column check        
+        if(state[1] == state[4] && state[1] == 1 && isCellEmpty(7)){
+            move2(7);
+            foundMove = true;
+        }
+        if(state[1] == state[7] && state[1] == 1 && isCellEmpty(4)){
+            move2(4);
+            foundMove = true;
+        }
+        if(state[4] == state[7] && state[4] == 1 && isCellEmpty(1)){
+            move2(1);
+            foundMove = true;
+        }
+        //right column check        
+        if(state[2] == state[5] && state[2] == 1 && isCellEmpty(8)){
+            move2(8);
+            foundMove = true;
+        }
+        if(state[2] == state[8] && state[2] == 1 && isCellEmpty(5)){
+            move2(5);
+            foundMove = true;
+        }
+        if(state[5] == state[8] && state[5] == 1 && isCellEmpty(2)){
+            move2(2);
+            foundMove = true;
+        }
+        //top-left to bottom-right check        
+        if(state[0] == state[4] && state[0] == 1 && isCellEmpty(8)){
+            move2(8);
+            foundMove = true;
+        }
+        if(state[0] == state[8] && state[0] == 1 && isCellEmpty(4)){
+            move2(4);
+            foundMove = true;
+        }
+        if(state[8] == state[4] && state[8] == 1 && isCellEmpty(0)){
+            move2(0);
+            foundMove = true;
+        }
+        var stop = 0;
+        while(!foundMove){
+            var tryid = Math.round(Math.random()*8);
+            console.log(tryid);
+            if (isCellEmpty(tryid)){
+                move2(tryid);
+                foundMove = true;
+            }
+
+            stop++;
+            if(stop>333){
+                foundMove = true;
+                $('#gametext').html("There was an error");
+            }
+        }
+        $('#gametext').html("Player's turn");
+        checkWin();
+        checkTie();
+    }
+    function move2(id){
+        $('#'+id).html(imgO);
+        state[id] = 2;
+    }
+    function isCellEmpty(id){
+        if(state[id] == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    function checkTie(){
+        for(let i = 0;i<9;i++){
+            if (state[i] == 0){
+                return false;
+            }
+        }
+        foundTie();
+        return true;
+    }
+    function checkWin(){
+        if(state[0] == state[1] && state[1] == state[2] && state[0] != 0){
+            foundWinner(state[0]);
+        }
+        if(state[3] == state[4] && state[4] == state[5] && state[3] != 0){
+            foundWinner(state[3]);
+        }
+        if(state[6] == state[7] && state[7] == state[8] && state[6] != 0){
+            foundWinner(state[6]);
+        }
+        if(state[0] == state[3] && state[3] == state[6] && state[0] != 0){
+            foundWinner(state[0]);
+        }
+        if(state[1] == state[4] && state[4] == state[7] && state[1] != 0){
+            foundWinner(state[1]);
+        }
+        if(state[2] == state[5] && state[5] == state[8] && state[2] != 0){
+            foundWinner(state[2]);
+        }
+        if(state[0] == state[4] && state[4] == state[8] && state[0] != 0){
+            foundWinner(state[0]);
+        }
+        if(state[2] == state[4] && state[4] == state[6] && state[2] != 0){
+            foundWinner(state[2]);
+        }
+        
+    }
+    function foundWinner(player){
+        if (player == 1){
+            $('#gametext').html("WINNER! Congrats!");
+            $('#4').html(playerwins);
+        }else{
+            $('#gametext').html("Computer Wins!");
+            $('#4').html(computerwins);
+        }
+        status = "winner";
+        $('.move-cell').off();
+    }
+    function foundTie(){
+        $('#gametext').html("CAT WINS! WOOT!");
+        status = "winner";
+        $('.move-cell').off();
+        $('#4').html(nyan);
+    }
+
+});

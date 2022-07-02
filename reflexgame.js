@@ -2,7 +2,7 @@ $(document).ready(function(){
     console.log('reflex game ready');
 
     var stateStatus = "off";
-    var startTime, finishTime, reflexTime;
+    var startTime, finishTime, reflexTime, clickTimer;
 
     $('#gamebutton').click(game);
 
@@ -12,8 +12,13 @@ $(document).ready(function(){
             $('#gametext').text("WAIT FOR IT...")
             stateStatus = "waiting";
             var waittime = Math.random()*(4200 - 1200)+1200;
-            setTimeout(start,waittime);
+            clickTimer = setTimeout(start,waittime);
         }else if(stateStatus == "waiting"){
+            clearTimeout(clickTimer);
+            $('#gamebutton').css({"background-color":"darkgray"});
+            $('#gametext').html("CLICKED TOO SOON<br /><br /><button id='reset'>Reset Game</button><br /><br />")
+            
+            $('#reset').click(reset);
         }else if(stateStatus == "running"){
             $('#gamebutton').css({"background-color":"darkgray"});
             stateStatus = "done";

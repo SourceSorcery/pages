@@ -1,0 +1,34 @@
+#gamewrapper{
+    width: 375px;
+    padding: 10px;
+    background-color: lightgray;
+}
+#gametext{
+    font-style: italic;
+    font-weight: 700;
+    width: 280px;
+    justify-content: center;
+}
+
+.move-cell{
+    height:110px;
+    width:110px;
+    padding: 3px;
+}
+
+.row-top{
+    border-bottom: 2px solid darkgray;
+}
+.row-center{
+}
+.row-bottom{
+    border-top: 2px solid darkgray;
+}
+.col-left{
+    border-right: 2px solid darkgray;
+}
+.col-center{
+}
+.col-right{
+    border-left: 2px solid darkgray;
+}
