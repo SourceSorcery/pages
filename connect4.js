@@ -1,159 +1,67 @@
 $(document).ready(function(){
     console.log('ttt ready');
-    const imgX = "<img class='x move-img' width='100px' src='assets/x.png'>";
-    const imgO = "<img class='o move-img' width='100px' src='assets/o.png'>";
+    const imgRed = "<img class='x move-img' width='80px' src='assets/c4red.png'>";
+    const imgBlack = "<img class='o move-img' width='80px' src='assets/c4black.png'>";
+    const bkgRed = "url('assets/c4red.png')";
+    const bkgBlack = "url('assets/c4black.png')";
+    const bkgValid = "url('assets/c4valid.png')";
     const nyan = "<img width='100px' src='assets/nyan100.gif'>";
     const computerwins = "<img width='100px' src='assets/computerwins.gif'>";
     const playerwins = "<img width='100px' src='assets/playerwins.gif'>";
     var status = "waiting";
-    var state = [0,0,0,0,0,0,0,0,0];
+    var state = [
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0]
+    ];
+    var rc = [0][0];  //this is the current move in row col array form
+    var currId = 0;
+    $('.move-cell').click(player1);
 
-    $('.move-cell').click(player1)
+    showValidCells();
 
+    function getIDbyRowCol(row,col){
+        let retval = parseFloat((parseFloat(row))*8) + parseFloat(col);
+        return retval;
+    }
+    function getRowColbyId(id){
+        var row = Math.floor(id/8);
+        var col = id % 8;
+        console.log(row + " - " + col);
+        return [row,col];
+    }
     function player1(){
         status = "playing";
         var id = $(this).attr('id');
-        if(isCellEmpty(id)){
-            $(this).html(imgX);
-            state[id] = 1;
+        rc = getRowColbyId(id);
+        currId = id;
+        if(isCellEmpty(rc[0],rc[1]) && isMoveValid(rc[0],rc[1])){
+            $(this).css("background-image",bkgRed);
+            $('#gametext').html("Good move");
+            state[rc[0]][rc[1]] = 1;
             checkWin();
             checkTie();
             if (status == "playing"){
                 player2();
             }
         }else{
-            $('#gametext').html("Pick an empty cell");
+            $('#gametext').html("Pick a valid cell. Must be lowest free cell in column.");
         }
     }
     function player2(){
         var stop = 0;
         var foundMove = false;
-        sumState = 0;
-        for(var i in state){sumState += state[i];}
-        //take a corner square if player starts in center
-        if(sumState == 1 && state[4] == 1){
-            var corners = [0,2,6,8];
-            var cornermove = corners[Math.floor(Math.random()*4)];
-            move2(cornermove);
-            foundMove = true;
-        }
-        //take middle cell
-        if(foundMove == false && isCellEmpty(4)){
-            move2(4);
-            foundMove = true;
-        }
-        //top row check        
-        if(foundMove == false && state[0] == state[1] && state[0] == 1 && isCellEmpty(2)){
-            move2(2);
-            foundMove = true;
-        }
-        if(foundMove == false && state[1] == state[2] && state[1] == 1 && isCellEmpty(0)){
-            move2(0);
-            foundMove = true;
-        }
-        if(foundMove == false && state[0] == state[2] && state[0] == 1 && isCellEmpty(1)){
-            move2(1);
-            foundMove = true;
-        }
-        //middle row check        
-        if(foundMove == false && state[3] == state[4] && state[3] == 1 && isCellEmpty(5)){
-            move2(5);
-            foundMove = true;
-        }
-        if(foundMove == false && state[4] == state[5] && state[4] == 1 && isCellEmpty(3)){
-            move2(3);
-            foundMove = true;
-        }
-        if(foundMove == false && state[3] == state[5] && state[3] == 1 && isCellEmpty(4)){
-            move2(4);
-            foundMove = true;
-        }
-        //bottom row check        
-        if(foundMove == false && state[6] == state[7] && state[6] == 1 && isCellEmpty(8)){
-            move2(8);
-            foundMove = true;
-        }
-        if(foundMove == false && state[7] == state[8] && state[7] == 1 && isCellEmpty(6)){
-            move2(6);
-            foundMove = true;
-        }
-        if(foundMove == false && state[6] == state[8] && state[6] == 1 && isCellEmpty(7)){
-            move2(7);
-            foundMove = true;
-        }
-        //left column check        
-        if(foundMove == false && state[0] == state[3] && state[0] == 1 && isCellEmpty(6)){
-            move2(6);
-            foundMove = true;
-        }
-        if(foundMove == false && state[0] == state[6] && state[0] == 1 && isCellEmpty(3)){
-            move2(3);
-            foundMove = true;
-        }
-        if(foundMove == false && state[3] == state[6] && state[3] == 1 && isCellEmpty(0)){
-            move2(0);
-            foundMove = true;
-        }
-        //center column check        
-        if(foundMove == false && state[1] == state[4] && state[1] == 1 && isCellEmpty(7)){
-            move2(7);
-            foundMove = true;
-        }
-        if(foundMove == false && state[1] == state[7] && state[1] == 1 && isCellEmpty(4)){
-            move2(4);
-            foundMove = true;
-        }
-        if(foundMove == false && state[4] == state[7] && state[4] == 1 && isCellEmpty(1)){
-            move2(1);
-            foundMove = true;
-        }
-        //right column check        
-        if(foundMove == false && state[2] == state[5] && state[2] == 1 && isCellEmpty(8)){
-            move2(8);
-            foundMove = true;
-        }
-        if(foundMove == false && state[2] == state[8] && state[2] == 1 && isCellEmpty(5)){
-            move2(5);
-            foundMove = true;
-        }
-        if(foundMove == false && state[5] == state[8] && state[5] == 1 && isCellEmpty(2)){
-            move2(2);
-            foundMove = true;
-        }
-        //top-left to bottom-right check        
-        if(foundMove == false && state[0] == state[4] && state[0] == 1 && isCellEmpty(8)){
-            move2(8);
-            foundMove = true;
-        }
-        if(foundMove == false && state[0] == state[8] && state[0] == 1 && isCellEmpty(4)){
-            move2(4);
-            foundMove = true;
-        }
-        if(foundMove == false && state[8] == state[4] && state[8] == 1 && isCellEmpty(0)){
-            move2(0);
-            foundMove = true;
-        }
-        //take a corner square if player starts in center and then takes a corner square
-        if(sumState == 4 && state[4] == 1 && (state[0] == 1 || state[2] == 1 || state[6] == 1 || state[8] == 1)){
-            var corners = [0,2,6,8];
-            while(!foundMove){
-                var cornermove = corners[Math.floor(Math.random()*4)];
-                if (isCellEmpty(cornermove)){
-                    move2(cornermove);
-                    foundMove = true;
-                }
-                stop++;
-                if(stop>333){
-                    foundMove = true;
-                    $('#gametext').html("There was an error");
-                }
-            }
-            foundMove = true;
-        }
+        foundMove = checkBlockWin();
         while(!foundMove){
-            var tryid = Math.round(Math.random()*8);
-            if (isCellEmpty(tryid)){
-                move2(tryid);
+            var tryrow = Math.floor(Math.random()*8);
+            var trycol = Math.floor(Math.random()*8);
+            if (isCellEmpty(tryrow,trycol) && isMoveValid(tryrow,trycol)){
+                move2(tryrow,trycol);
                 foundMove = true;
             }
             stop++;
@@ -165,61 +73,226 @@ $(document).ready(function(){
         $('#gametext').html("Player's turn");
         checkWin();
         checkTie();
+        showValidCells();
     }
-    function move2(id){
-        $('#'+id).html(imgO);
-        state[id] = 2;
+    function showValidCells(){
+        
+        for(let c=0;c<=7;c++){
+            let colDone = false;
+            for(let r=7;r>=0;r--){
+                if(state[r][c] == 0 && !colDone){
+                    let validcell = "#"+getIDbyRowCol(r,c);
+                    $(validcell).css("background-image",bkgValid);
+                    colDone = true;
+                }
+            }
+        }
     }
-    function isCellEmpty(id){
-        if(state[id] == 0){
+    function move2(row,col){
+        var cmoveid = getIDbyRowCol(row,col);
+        $('#'+cmoveid).css("background-image",bkgBlack);
+        state[row][col] = 2;
+    }
+    function isCellEmpty(row,col){
+        if(state[row][col] == 0){
             return true;
         }else{
             return false;
         }
     }
-    function checkTie(){
-        for(let i = 0;i<9;i++){
-            if (state[i] == 0){
+    function isMoveValid(row,col){
+        for(let r=row+1;r<8;r++){
+            if(state[r][col] == 0){
                 return false;
+            }
+        }
+        return true;
+    }
+    function checkTie(){
+        for(let i = 0;i<8;i++){
+            for(let i2 = 0;i2<8;i2++){
+                if (state[i][i2] == 0){
+                    return false;
+                }
             }
         }
         foundTie();
         return true;
     }
-    function checkWin(){
-        if(state[0] == state[1] && state[1] == state[2] && state[0] != 0){
-            foundWinner(state[0]);
+    function checkBlockWin(){
+        //check row block right
+        for(let r=0;r<8;r++){
+            for(let c=0;c<5;c++){
+                if( state[r][c] == state[r][c+1] &&
+                    state[r][c+1] == state[r][c+2] &&
+                    state[r][c] != 0){
+                        if(isCellEmpty(r,c+3) && isMoveValid(r,c+3)){
+                            move2(r,c+3);
+                            return true;
+                        }
+                }
+            }
         }
-        if(state[3] == state[4] && state[4] == state[5] && state[3] != 0){
-            foundWinner(state[3]);
+        //check row block left
+        for(let r=0;r<8;r++){
+            for(let c=8;c>2;c--){
+                if( state[r][c] == state[r][c-1] &&
+                    state[r][c-1] == state[r][c-2] &&
+                    state[r][c] != 0){
+                        if(isCellEmpty(r,c-3) && isMoveValid(r,c-3)){
+                            move2(r,c-3);
+                            return true;
+                        }
+                }
+            }
         }
-        if(state[6] == state[7] && state[7] == state[8] && state[6] != 0){
-            foundWinner(state[6]);
+        //check col block down
+        for(var c=0;c<8;c++){
+            for(var r=0;r<5;r++){
+                if( state[r][c] == state[r+1][c] &&
+                    state[r+1][c] == state[r+2][c] &&
+                    state[r][c] != 0
+                    ){
+                        if(isCellEmpty(r+3,c) && isMoveValid(r+3,c)){
+                            move2(r+3,c);
+                            return true;
+                        }
+                    }
+            }
         }
-        if(state[0] == state[3] && state[3] == state[6] && state[0] != 0){
-            foundWinner(state[0]);
+        //check col block up
+        for(var c=0;c<8;c++){
+            for(var r=7;r>2;r--){
+                if( state[r][c] == state[r-1][c] &&
+                    state[r-1][c] == state[r-2][c] &&
+                    state[r][c] != 0
+                    ){
+                        if(isCellEmpty(r-3,c) && isMoveValid(r-3,c)){
+                            move2(r-3,c);
+                            return true;
+                        }
+                    }
+            }
         }
-        if(state[1] == state[4] && state[4] == state[7] && state[1] != 0){
-            foundWinner(state[1]);
+        //check row hole block right
+        for(let r=0;r<8;r++){
+            for(let c=0;c<5;c++){
+                if( state[r][c] == state[r][c+1] &&
+                    state[r][c] == state[r][c+3] &&
+                    state[r][c] != 0){
+                        if(isCellEmpty(r,c+2) && isMoveValid(r,c+2)){
+                            move2(r,c+2);
+                            return true;
+                        }
+                }
+            }
         }
-        if(state[2] == state[5] && state[5] == state[8] && state[2] != 0){
-            foundWinner(state[2]);
-        }
-        if(state[0] == state[4] && state[4] == state[8] && state[0] != 0){
-            foundWinner(state[0]);
-        }
-        if(state[2] == state[4] && state[4] == state[6] && state[2] != 0){
-            foundWinner(state[2]);
+        //check row hole block left
+        for(let r=0;r<8;r++){
+            for(let c=0;c<5;c++){
+                if( state[r][c] == state[r][c+2] &&
+                    state[r][c] == state[r][c+3] &&
+                    state[r][c] != 0){
+                        if(isCellEmpty(r,c+2) && isMoveValid(r,c+2)){
+                            move2(r,c+2);
+                            return true;
+                        }
+                }
+            }
         }
         
+        //check diag-up-right block
+        for(var r=7;r>=3;r--){
+            for(var c=0;c<5;c++){
+                if( state[r][c] == state[r-1][c+1] &&
+                    state[r-1][c+1] == state[r-2][c+2] &&
+                    state[r][c] != 0
+                    ){
+                        if(isCellEmpty(r-3,c+3) && isMoveValid(r-3,c+3)){
+                            move2(r-3,c+3);
+                            return true;
+                        }
+                    }
+            }
+        }
+        //check diag-up-left block
+        for(var r=7;r>=3;r--){
+            for(var c=7;c>=3;c--){
+                if( state[r][c] == state[r-1][c-1] &&
+                    state[r-1][c-1] == state[r-2][c-2] &&
+                    state[r][c] != 0
+                    ){
+                        if(isCellEmpty(r-3,c-3) && isMoveValid(r-3,c-3)){
+                            move2(r-3,c-3);
+                            return true;
+                        }
+                    }
+            }
+        }
+
+    }
+    function checkWin(){
+        //check row win
+        for(let r=0;r<8;r++){
+            for(let c=0;c<5;c++){
+                if( state[r][c] == state[r][c+1] &&
+                    state[r][c+1] == state[r][c+2] &&
+                    state[r][c+2] == state[r][c+3] &&
+                    state[r][c] != 0
+                    ){
+                        foundWinner(state[r][c]);
+                }
+            }
+        }
+        //check col win
+        for(var c=0;c<8;c++){
+            for(var r=0;r<5;r++){
+                if( state[r][c] == state[r+1][c] &&
+                    state[r+1][c] == state[r+2][c] &&
+                    state[r+2][c] == state[r+3][c] &&
+                    state[r][c] != 0
+                    ){
+                        console.log(r + " - " + c)
+                        console.log(state[r][c]);
+                        foundWinner(state[r][c]);
+                    }
+            }
+        }
+        //check diag-down-right win
+        for(var r=0;r<5;r++){
+            for(var c=0;c<5;c++){
+                if( state[r][c] == state[r+1][c+1] &&
+                    state[r+1][c+1] == state[r+2][c+2] &&
+                    state[r+2][c+2] == state[r+3][c+3] &&
+                    state[r][c] != 0
+                    ){
+                        console.log(r + " - " + c)
+                        console.log(state[r][c]);
+                        foundWinner(state[r][c]);
+                    }
+            }
+        }
+        //check diag-down-left win
+        for(var r=0;r<5;r++){
+            for(var c=3;c<8;c++){
+                if( state[r][c] == state[r+1][c-1] &&
+                    state[r+1][c-1] == state[r+2][c-2] &&
+                    state[r+2][c-2] == state[r+3][c-3] &&
+                    state[r][c] != 0
+                    ){
+                        console.log(r + " - " + c)
+                        console.log(state[r][c]);
+                        foundWinner(state[r][c]);
+                    }
+            }
+        }
+
     }
     function foundWinner(player){
         if (player == 1){
             $('#gametext').html("WINNER! Congrats!");
-            $('#4').html(playerwins);
         }else{
             $('#gametext').html("Computer Wins!");
-            $('#4').html(computerwins);
         }
         status = "winner";
         $('.move-cell').off();
