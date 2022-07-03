@@ -2,8 +2,20 @@ $(document).ready(readyFunction);
 
 function readyFunction( jQuery ){
   console.log('document ready');
+  //get menu
+  $.ajax({url:"menu.html",success:loadMenu})
   fadeInWord("Mark Fergason's GitHub Pages","#h1title");
   $('#linkMenu').click(function(){$('#mySidebar').show();})
+}
+
+function loadMenu(r){
+  $('body').prepend(r);
+  //highlight current page on menu
+  var url = $(location).attr('href');
+  var urlparts = url.split("/");
+  var page = urlparts[urlparts.length-1];
+  var pageparts = page.split(".");
+  $('#'+pageparts[0]).addClass('w3-text-teal');
 }
 
 function fadeInWord(word, wrapperElementSelector){
