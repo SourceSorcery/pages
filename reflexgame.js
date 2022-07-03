@@ -25,12 +25,16 @@ $(document).ready(function(){
             finishTime = + new Date();
             reflexTime = finishTime - startTime;
             var results = "TIME: " + reflexTime + "ms<br />";
-            if (reflexTime < 200){
-                results += "AMAZING JOB!";
+            if (reflexTime < 100){
+                results += "You got lucky.";
+            } else if (reflexTime < 200){
+                results += "AMAZING!";
             } else if (reflexTime < 300){
                 results += "GREAT JOB!";
             } else if (reflexTime < 400){
                 results += "Not too shabby!";
+            } else if (reflexTime < 500){
+                results += "Good try!";
             } else {
                 results += "Try again.";
             }

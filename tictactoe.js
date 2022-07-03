@@ -10,6 +10,16 @@ $(document).ready(function(){
 
     $('.move-cell').click(player1)
 
+    function resetGame(){    
+        console.log('resetting game')
+        status = "waiting";
+        state = [0,0,0,0,0,0,0,0,0];
+        $('.move-cell').html('');
+        $('.move-cell').click(player1)
+        $('#gametext').html("Click on a square to begin");
+
+    }
+
     function player1(){
         status = "playing";
         var id = $(this).attr('id');
@@ -145,9 +155,19 @@ $(document).ready(function(){
                 stop++;
                 if(stop>333){
                     foundMove = true;
-                    $('#gametext').html("There was an error");
+                    $('#gametext').html("There was an error. &nbsp;&nbsp; <div class='link' id='linkReset'>Reset Game</div>");
+                    $('#linkReset').click(resetGame);
                 }
             }
+            foundMove = true;
+        }
+        //take a side square if player starts in opposing corners
+        if(!foundMove && sumState == 4 && state[4] == 2 && (state[0] == 1 && state[8] == 1)){
+            move2(2);
+            foundMove = true;
+        }        
+        if(!foundMove && sumState == 4 && state[4] == 2 && (state[2] == 1 || state[6] == 1)){
+            move2(8);
             foundMove = true;
         }
         while(!foundMove){
@@ -159,7 +179,8 @@ $(document).ready(function(){
             stop++;
             if(stop>333){
                 foundMove = true;
-                $('#gametext').html("There was an error");
+                $('#gametext').html("There was an error. &nbsp;&nbsp; <div class='link' id='linkReset'>Reset Game</div>");
+                $('#linkReset').click(resetGame);
             }
         }
         $('#gametext').html("Player's turn");
@@ -215,17 +236,20 @@ $(document).ready(function(){
     }
     function foundWinner(player){
         if (player == 1){
-            $('#gametext').html("WINNER! Congrats!");
+            $('#gametext').html("WINNER! Congrats! &nbsp;&nbsp; <div class='link' id='linkReset'>Reset Game</div>");
+            $('#linkReset').click(resetGame);
             $('#4').html(playerwins);
         }else{
-            $('#gametext').html("Computer Wins!");
+            $('#gametext').html("Computer Wins! &nbsp;&nbsp; <div class='link' id='linkReset'>Reset Game</div>");
+            $('#linkReset').click(resetGame);
             $('#4').html(computerwins);
         }
         status = "winner";
         $('.move-cell').off();
     }
     function foundTie(){
-        $('#gametext').html("CAT WINS! WOOT!");
+        $('#gametext').html("CAT WINS! WOOT! &nbsp;&nbsp; <div class='link' id='linkReset'>Reset Game</div>");
+        $('#linkReset').click(resetGame);
         status = "winner";
         $('.move-cell').off();
         $('#4').html(nyan);
