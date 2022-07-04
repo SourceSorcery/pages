@@ -1,0 +1,51 @@
+#gamewrapper{
+}
+#gametext{
+    font-style: italic;
+    font-weight: 700;
+    width: 600px;
+    justify-content: center;
+}
+
+#canvas{
+    width: 1002px;
+    height:802px;
+    display:flex;
+    flex-wrap: wrap;
+    border: 1px solid lightgray;
+}
+
+.pixel{
+    width: 20px;
+    height: 20px;
+    border: 1px solid lightgray;
+}
+
+@media (max-width:600px){
+    #contentMain{
+        margin:0px;
+    }
+}
+
+@media (min-width:601px) and (max-width:992px){
+
+}
+
+
+/*
+
+
+.move-cell{
+    max-height:110px;
+    min-width: 50px;
+    max-width:110px;
+    min-height: 50px;
+    padding: 0px;
+}
+
+
+
+
+
+
+*/
