@@ -8,8 +8,8 @@
 }
 
 #canvas{
-    width: 1002px;
-    height:802px;
+    width: 242px;
+    height:242px;
     display:flex;
     flex-wrap: wrap;
     border: 1px solid lightgray;
