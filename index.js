@@ -4,6 +4,9 @@ function readyFunction( jQuery ){
   console.log('document ready');
   //get menu
   $.ajax({url:"menu.html",success:loadMenu})
+  //get footer
+  console.log('footer')
+  $.ajax({url:"footer.html",success:loadFooter})
   fadeInWord("Mark Fergason's GitHub Pages","#h1title");
   $('#linkMenu').click(function(){$('#mySidebar').show();})
 }
@@ -16,6 +19,12 @@ function loadMenu(r){
   var page = urlparts[urlparts.length-1];
   var pageparts = page.split(".");
   $('#'+pageparts[0]).addClass('w3-text-teal');
+}
+
+function loadFooter(r){
+  console.log('footer')
+  $('.w3-main').append(r);
+  console.log('footer')
 }
 
 function fadeInWord(word, wrapperElementSelector){
