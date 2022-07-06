@@ -1,6 +1,6 @@
 $(document).ready(function(){
     console.log('snake ready');
-    $('#gametext').html("Press the Right arrow key to begin!")
+    $('#gametext').html("Press the Right arrow key (or right button) to begin!")
 
     //    const imgRed = "<img class='x move-img' width='80px' src='assets/c4red.png'>";
     //    const imgBlack = "<img class='o move-img' width='80px' src='assets/c4black.png'>";
@@ -46,6 +46,9 @@ $(document).ready(function(){
     createCanvas();
     drawCanvas();
     $(document).keydown(function(e){userInput(e.which)});
+    $('.control').click(function(){
+        userInput($(this).attr('dir'));
+    })
     function createCanvas(){
         for(let i=0;i<gamesize;i++){
             var h = "<div class='pixel' id='" + i + "'></div>";
@@ -79,7 +82,6 @@ $(document).ready(function(){
         }else{
             //remove tail if not eating/growing
             //where 1, set to 0 and subtract 1 from any > 1
-            console.log('ticking')
             for(let i=0;i<gamesize;i++){
                 if(state[i]==1){state[i]=0;}
                 if(state[i]>1){state[i]=state[i]-1;}
@@ -100,13 +102,11 @@ $(document).ready(function(){
         setTimeout(tick,tickTime);
     }
     function placeFood(){
-        console.log('placing food')
         var foundEmpty = false;
         let stop = 333;
         let i=0;
         while (!foundEmpty && i<stop){
             let i = Math.floor(Math.random()*(gamesize-1));
-            console.log(i);
             if(state[i]==0){
                 state[i]=-1;
                 foundEmpty=true;

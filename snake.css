@@ -1,9 +1,14 @@
-#gamewrapper{
+#controls{
+    
+    font-style: italic;
+    font-weight: 700;
+    width: 242px;
+    justify-content: center;
 }
 #gametext{
     font-style: italic;
     font-weight: 700;
-    width: 600px;
+    width: 400px;
     justify-content: center;
 }
 
