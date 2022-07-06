@@ -8,7 +8,8 @@
 #gametext{
     font-style: italic;
     font-weight: 700;
-    width: 400px;
+    width: 242px;
+    height: 50px;
     justify-content: center;
 }
 
